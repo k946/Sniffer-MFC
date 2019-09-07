@@ -3,7 +3,8 @@
 ## 功能：
 1.0：   
   嗅探捕获数据包   
-  解析数据包的头部（可解析的协议：ETHERNET,802.3,IP,ICMP,TCP,UDP,ARP）  
+  解析数据包的头部（可解析的协议：ETHERNET,802.3,IP,IPv6,ARP,ICMP,TCP,UDP,IGMP,OSPF）  
+  以十六进制和ASCII形式显示数据包  
   编辑数据包  
   发送数据包（还没有重新计算验证和的功能）  
   过滤器（可过滤IP地址和协议）
