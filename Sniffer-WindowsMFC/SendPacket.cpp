@@ -93,5 +93,4 @@ BOOL SendPacket::OnInitDialog()
 
 void SendPacket::sendPacket(u_char* pkt_data, int len) {
 	pcap_sendpacket(theApp.m_curDev, pkt_data, len);
-	delete [] pkt_data;
 }

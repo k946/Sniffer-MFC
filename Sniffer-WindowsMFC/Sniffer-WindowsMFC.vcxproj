@@ -81,6 +81,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\ProgramData\Microsoft\Windows\Start Menu\Programs\WinPcap\Include;C:\ProgramData\Microsoft\Windows\Start Menu\Programs\WinPcap\Lib;</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;C:\ProgramData\Microsoft\Windows\Start Menu\Programs\WinPcap\Include;C:\ProgramData\Microsoft\Windows\Start Menu\Programs\WinPcap\Lib;</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
