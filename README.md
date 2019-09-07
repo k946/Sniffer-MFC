@@ -10,5 +10,5 @@
    
    
 ##运行截图：
-<img src="https://github.com/k946/Sniffer-MFC/tree/master/Sniffer-WindowsMFC/runtimeText/主体.PNG" width="350" height="350" alt="图片加载失败时，显示这段字"/>  
-<img src="https://github.com/k946/Sniffer-MFC/tree/master/Sniffer-WindowsMFC/runtimeText/重新发送ping包.PNG" width="350" height="350" alt="图片加载失败时，显示这段字"/>  
+<img src="https://github.com/k946/Sniffer-MFC/blob/master/Sniffer-WindowsMFC/runtimeText/主体.PNG" width="350" height="350" alt="图片加载失败时，显示这段字"/>  
+<img src="https://github.com/k946/Sniffer-MFC/blob/master/Sniffer-WindowsMFC/runtimeText/重新发送ping包.PNG" width="350" height="150" alt="图片加载失败时，显示这段字"/>  
