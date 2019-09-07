@@ -32,7 +32,7 @@ public:
 	PackHexView *m_packHexViewCtrl;		//调用PackHexView的成员方法
 	std::vector<CString>	m_filter_IPAddress = {};	//需要过滤的IP地址
 	std::vector<CString>	m_filter_Protocol = {};		//需要过滤的协议
-	pcap_t* m_curDev = NULL;					//已开启的网卡设备
+	pcap_t* m_curDev = 0;					//已开启的网卡设备
 	bool m_isSniffer = FALSE;					//是否正在嗅探
 	BOOL m_haveFilter = FALSE;					//是否开启过滤
 	int m_nIndex = -1;
