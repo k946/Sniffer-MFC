@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Sniffer-WindowsMFC.h"
 #include "PackHexView.h"
+#include "PackHexAnalysis.h"
 
 
 // PackHexView
@@ -57,6 +58,7 @@ void PackHexView::OnInitialUpdate()
 	m_edit->SetReadOnly();
 }
 
+//正常形式打印text
 void PackHexView::ShowText(CString & text) {
 	this->SetWindowText(text);	
 
@@ -73,6 +75,7 @@ void PackHexView::ShowText(CString & text) {
 	m_edit->SetSelectionCharFormat(cf);
 }
 
+//在offset的范围中上色打印
 void PackHexView::ShowText(CString & text, std::map<int, int> offset) {
 	this->SetWindowText(text);
 
@@ -89,6 +92,7 @@ void PackHexView::ShowText(CString & text, std::map<int, int> offset) {
 	m_edit->SetSelectionCharFormat(cf);
 
 
+	std::map<int, int>result;
 	int start;
 	int end;
 	int color[] = { 0X96CDCD, 0XEE9A49, 0XEE6363, 0XCDBE70, 0XCD950C, 0X43CD80, 0XA2CD5A };
@@ -97,7 +101,10 @@ void PackHexView::ShowText(CString & text, std::map<int, int> offset) {
 		start = iter->first;
 		end = iter->second;
 		cf.crTextColor = color[i++];
-		m_edit->SetSel(start*3, end*3); //设置处理区域 
-		m_edit->SetSelectionCharFormat(cf);
+		result = PackHexAnalysis::computeOffset(start, end, 8, 8 + 16 * 3 + 20, 3);
+		for (auto iter2 = result.begin(); iter2 != result.end(); iter2++) {
+			m_edit->SetSel(iter2->first, iter2->second); //设置处理区域 
+			m_edit->SetSelectionCharFormat(cf);
+		}
 	}
 }

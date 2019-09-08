@@ -1,4 +1,5 @@
 #pragma once
+#include<map>
 class PackHexAnalysis
 {
 public:
@@ -14,5 +15,6 @@ public:
 	static CString charFormatHexASCII(const u_char * data, int size);
 	//十六进制转字符
 	static u_char * hexToChar(const CString hex);
+	static std::map<int, int> computeOffset(int start, int end, int offset, int lineLenght, int placehold);
 };
 
