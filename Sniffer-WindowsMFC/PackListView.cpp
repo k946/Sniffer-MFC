@@ -6,6 +6,7 @@
 #include "PackListView.h"
 #include "PackInfoAnalysis.h"
 #include "PackHexAnalysis.h"
+#include <memory>
 #include <map>
 
 
@@ -120,17 +121,17 @@ void PackListView::OnClickList(NMHDR * pNMHDR, LRESULT * pResult) {
 		CString temp;
 		std::map<CString, CString> info;		//报文头部的键值对：字段名-值
 		std::map<int, int>	protocol_offset;	//各个协议头的偏移量
-		PackInfoAnalysis* protocol;				//协议分析类
+		std::unique_ptr<PackInfoAnalysis> protocol; //协议分析类,使用智能指针方便回收内存
 		int start;								//协议开始的字节
 		int end;								//协议结束的字节
 
 		//判断协议类型
 		kind.Format((CString)"%02X%02X", pkt_data[12], pkt_data[13]);
 		if (kind.Compare(kind_ip) == 0 || kind.Compare(kind_arp) == 0 || kind.Compare(kind_rarp) == 0 || kind.Compare(kind_ipv6) == 0) {
-			protocol = &Ethernet(0);
+			protocol.reset(new Ethernet(0));
 		}
 		else {
-			protocol = &IEEE802_3(0);
+			protocol.reset(new IEEE802_3(0));
 		}
 
 		//遍历协议，构造需要PackInfoView显示的信息以及协议头的偏移量protocol_offset
@@ -146,13 +147,14 @@ void PackListView::OnClickList(NMHDR * pNMHDR, LRESULT * pResult) {
 			temp += (CString)"\r\n\r\n";
 			info.clear();
 			
-			protocol = protocol->NextProtocol(pkt_data + protocol->offset);
+			protocol.reset(protocol->NextProtocol(pkt_data + protocol->offset));
 			if(protocol != NULL)
 				end = protocol->offset;
 			protocol_offset[start] = end;
 		}
+		//显示头部信息
 		theApp.m_packInfoViewCtrl->ShowText(temp);		
-		
+		//显示十六进制信息
 		theApp.m_packHexViewCtrl->ShowText( PackHexAnalysis::charFormatHexASCII(pkt_data, theApp.m_allPacket[nIndex].pkt_header->len), protocol_offset );
 	}
 

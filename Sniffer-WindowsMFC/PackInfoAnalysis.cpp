@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "PackInfoAnalysis.h"
 #include <map>
+#include <memory>
+using namespace std;
 
 CString global_s_ip;
 CString	global_d_ip;
@@ -440,17 +442,20 @@ void DNS::GetInfo(const u_char* pkt_data, std::map<CString, CString> &result) {
 }
 
 PackInfoAnalysis* HTTP::NextProtocol(const u_char* pkt_data) { return NULL; }
+
 void HTTP::GetInfo(const u_char* pkt_data, std::map<CString, CString> &result) {
 
 }
 
 
 PackInfoAnalysis* HTTPS::NextProtocol(const u_char* pkt_data) { return NULL; }
+
 void HTTPS::GetInfo(const u_char* pkt_data, std::map<CString, CString> &result) {
 
 }
 
 PackInfoAnalysis* FTP::NextProtocol(const u_char* pkt_data) { return NULL; }
+
 void FTP::GetInfo(const u_char* pkt_data, std::map<CString, CString> &result) {
 
 }

@@ -77,7 +77,7 @@ void ChoiceDevs::OnBnClickedOk()
 	if( (theApp.m_curDev = pcap_open(temp->name, 65536, 1, 1000, NULL, errbuf)) == NULL){
 		MessageBox((CString)errbuf);
 		return;
-	} 
+	}
 
 	::AfxMessageBox((CString)temp->description);
 }
@@ -98,6 +98,7 @@ void ChoiceDevs::GetDefaultDev(pcap_t * & param) {
 		::AfxMessageBox((CString)errbuf);
 		return;
 	}
+
 	pcap_freealldevs(alldevs);
 
 }

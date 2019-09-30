@@ -225,13 +225,18 @@ void CSnifferWindowsMFCApp::OnFilterList() {
 
 
 void CSnifferWindowsMFCApp::OnAppExit()
-{
-	pcap_close(m_curDev);
+{	
+	if(m_curDev != NULL)
+		pcap_close(m_curDev);
+
 	for (int i = 0; i < m_allPacket.size(); ++i) {
 		delete[] m_allPacket[i].pkt_data;
 		delete m_allPacket[i].pkt_header;
 	}
 	m_allPacket.clear();
+	m_packHexViewCtrl->DestroyWindow();
+	m_packInfoViewCtrl->DestroyWindow();
+	m_packListCtrl->DestroyWindow();
 	exit(0);
 	// TODO: 在此添加命令处理程序代码
 }

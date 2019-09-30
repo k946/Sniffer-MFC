@@ -3,6 +3,7 @@
 #include "PackInfoAnalysis.h"
 #include <pcap.h>
 #include <map>
+#include <memory>
 #include "Sniffer-WindowsMFC.h"
 
 extern CString global_s_ip;
@@ -34,7 +35,7 @@ static void packet_handler(u_char* s, const struct pcap_pkthdr* pkt_head, const 
 	CString kind_arp("0806");
 	CString kind_rarp("8035");
 	CString kind_ipv6("86DD");
-	PackInfoAnalysis* protocol;
+	std::unique_ptr<PackInfoAnalysis> protocol;
 
 	CString s_count;
 	s_count.Format((CString)"%d", count);
@@ -48,16 +49,16 @@ static void packet_handler(u_char* s, const struct pcap_pkthdr* pkt_head, const 
 	//判断协议类型
 	kind.Format((CString)"%02X%02X", pkt_data[12], pkt_data[13]);
 	if (kind.Compare(kind_ip) == 0 || kind.Compare(kind_arp) == 0 || kind.Compare(kind_rarp) == 0 || kind.Compare(kind_ipv6) == 0) {
-		protocol = &Ethernet(0);
+		protocol.reset(new Ethernet(0));
 	}
 	else {
-		protocol = &IEEE802_3(0);
+		protocol.reset(new IEEE802_3(0));
 	}
 	PackInfoAnalysis::clear_global();
 	//获取最上层的协议
 	while (protocol != NULL) {
 		last_protocol = protocol->GetProtocolName();
-		protocol = protocol->NextProtocol(pkt_data + protocol->offset);
+		protocol.reset(protocol->NextProtocol(pkt_data + protocol->offset));
 	}
 
 	if (std::count(theApp.m_filter_Protocol.begin(), theApp.m_filter_Protocol.end(), last_protocol) || std::count(theApp.m_filter_IPAddress.begin(), theApp.m_filter_IPAddress.end(), global_d_ip) || std::count(theApp.m_filter_IPAddress.begin(), theApp.m_filter_IPAddress.end(), global_s_ip)) {

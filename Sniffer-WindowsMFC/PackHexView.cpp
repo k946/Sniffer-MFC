@@ -95,8 +95,9 @@ void PackHexView::ShowText(CString & text, std::map<int, int> offset) {
 	std::map<int, int>result;
 	int start;
 	int end;
-	int color[] = { 0X96CDCD, 0XEE9A49, 0XEE6363, 0XCDBE70, 0XCD950C, 0X43CD80, 0XA2CD5A };
+	int color[] = { 0X96CDCD, 0XEE9A49, 0X43CD80, 0XEE6363, 0XCDBE70, 0XCD950C, 0XA2CD5A };
 	int i = 0;
+
 	for (auto iter = offset.begin(); iter != offset.end(); iter++) {
 		start = iter->first;
 		end = iter->second;

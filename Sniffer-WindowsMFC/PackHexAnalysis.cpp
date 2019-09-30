@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "PackHexAnalysis.h"
 
-#define OFFSET(line, lienlen, offset) (line * lienlen + offset)  
+#define OFFSET(line, lienlen, offset) ((line) * (lienlen) + (offset))  
 
 PackHexAnalysis::PackHexAnalysis()
 {
@@ -135,6 +135,7 @@ std::map<int, int> PackHexAnalysis::computeOffset(int start, int end, int offset
 	int endLineOffset = end % 16;		//end与格式化前的行首的距离
 	int startAfter;					//格式后start与行首的距离
 	int endAfter;					//格式后start与行首的距离
+
 	if (firstLine == endLine) {
 		int startAfter = OFFSET(firstLine, lineLenght, offset) + firstLineOffset * placehold;
 		int endAfter = OFFSET(firstLine, lineLenght, offset) + endLineOffset  * placehold;
@@ -149,6 +150,7 @@ std::map<int, int> PackHexAnalysis::computeOffset(int start, int end, int offset
 	startAfter = OFFSET(endLine, lineLenght, offset);
 	endAfter = OFFSET(endLine, lineLenght, offset) + endLineOffset * placehold;
 	result[startAfter] = endAfter;
+
 	for (int i = 1; i < lineOffset; ++i) {
 		startAfter = OFFSET(firstLine + i, lineLenght, offset);
 		endAfter = OFFSET(firstLine + i, lineLenght, offset) + 16 * placehold;

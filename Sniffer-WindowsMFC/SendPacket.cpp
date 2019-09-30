@@ -59,7 +59,7 @@ BOOL SendPacket::OnInitDialog()
 	//字体
 	CFont *font;
 	LOGFONT lf;
-	font = new CFont;
+	font = new CFont();
 	font->CreatePointFont(115, (LPCTSTR)"新宋体");
 	font->GetLogFont(&lf);
 	//lf.lfUnderline=TRUE; 
@@ -82,8 +82,6 @@ BOOL SendPacket::OnInitDialog()
 		m_hexView.SetWindowTextW(hex);
 	}
 
-	
-	
 
 	// TODO:  在此添加额外的初始化
 
