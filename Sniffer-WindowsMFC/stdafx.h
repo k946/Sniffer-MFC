@@ -41,6 +41,7 @@
 #include <afxcontrolbars.h>
 #include <afxwin.h>
 #include <afxrich.h>
+#include <afxext.h>
 
 
 

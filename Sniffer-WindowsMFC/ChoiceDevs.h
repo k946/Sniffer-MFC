@@ -2,6 +2,7 @@
 
 #include <vector>
 // ChoiceDevs 对话框
+#define IPTOSBUFFERS 12
 
 class ChoiceDevs : public CDialogEx
 {
@@ -10,6 +11,7 @@ class ChoiceDevs : public CDialogEx
 public:
 	ChoiceDevs(CWnd* pParent = nullptr);   // 标准构造函数
 	virtual ~ChoiceDevs();
+
 
 // 对话框数据
 #ifdef AFX_DESIGN_TIME

@@ -60,6 +60,15 @@
     <ClInclude Include="SendPacket.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Staticstics.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FlowTraffic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FlowView.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sniffer-WindowsMFC.cpp">
@@ -99,6 +108,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SendPacket.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FlowView.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

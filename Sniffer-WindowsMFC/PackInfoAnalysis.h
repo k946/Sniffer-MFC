@@ -19,6 +19,7 @@ public:
 	static void clear_global();
 };
 
+CString GetValue(const const u_char* pkt_data, CString key);
 
 class Ethernet: public PackInfoAnalysis {
 public:

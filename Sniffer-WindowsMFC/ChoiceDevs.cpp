@@ -7,6 +7,11 @@
 #include "afxdialogex.h"
 #define HAVE_REMOTE
 #include <remote-ext.h>
+#include "pcap.h" 
+#include <conio.h> 
+#include "packet32.h" 
+#include "ntddndis.h" 
+#define Max_Num_Adapter 10 
 
 
 // ChoiceDevs 对话框
@@ -16,6 +21,7 @@ IMPLEMENT_DYNAMIC(ChoiceDevs, CDialogEx)
 ChoiceDevs::ChoiceDevs(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_CHOICE_DEVS, pParent)
 {
+
 }
 
 ChoiceDevs::~ChoiceDevs()
@@ -36,6 +42,44 @@ END_MESSAGE_MAP()
 
 
 // ChoiceDevs 消息处理程序
+
+//获取网卡MAC地址
+CString GetAdapterMacAddr(char *lpszAdapterName) {
+
+	CString result = (CString)"";
+	LPADAPTER lpAdapter = PacketOpenAdapter(lpszAdapterName);
+
+	if (!lpAdapter || (lpAdapter->hFile == INVALID_HANDLE_VALUE))
+	{
+		return result;
+	}
+
+	PPACKET_OID_DATA oidData = (PPACKET_OID_DATA)malloc(6 + sizeof(PACKET_OID_DATA));
+	if (NULL == oidData)
+	{
+		PacketCloseAdapter(lpAdapter);
+		return result;
+	}
+
+	oidData->Oid = OID_802_3_CURRENT_ADDRESS;
+	oidData->Length = 6;
+	memset(oidData->Data, 0, 6);
+
+	BOOLEAN  bStatus = PacketRequest(lpAdapter, FALSE, oidData);
+	if (bStatus)
+	{
+		result.Format((CString)"%02X-%02X-%02X-%02X-%02X-%02X", (oidData->Data)[0], (oidData->Data)[1], (oidData->Data)[2], (oidData->Data)[3], (oidData->Data)[4], (oidData->Data)[5], (oidData->Data)[6]);
+
+	}
+	else
+	{
+		return (CString)"";
+		free(oidData);
+	}
+	free(oidData);
+	PacketCloseAdapter(lpAdapter);
+	return result;
+}
 
 //初始下拉列表，选择网卡
 BOOL ChoiceDevs::OnInitDialog() {
@@ -79,8 +123,10 @@ void ChoiceDevs::OnBnClickedOk()
 		return;
 	}
 
-	::AfxMessageBox((CString)temp->description);
+	theApp.m_mac = GetAdapterMacAddr(temp->name + 8);
+	::AfxMessageBox(theApp.m_mac);
 }
+
 
 //获取默认网卡(第一个扫描出来的网卡)
 void ChoiceDevs::GetDefaultDev(pcap_t * & param) {
@@ -98,6 +144,9 @@ void ChoiceDevs::GetDefaultDev(pcap_t * & param) {
 		::AfxMessageBox((CString)errbuf);
 		return;
 	}
+	
+	theApp.m_mac = GetAdapterMacAddr(temp->name + 8);
+	::AfxMessageBox(theApp.m_mac);
 
 	pcap_freealldevs(alldevs);
 

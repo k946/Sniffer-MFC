@@ -8,6 +8,7 @@
 #include "MainFrm.h"
 #include "PackInfoView.h"
 #include "ChoiceDevs.h"
+#include "FlowView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -70,16 +71,19 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext) {
 
 	GetClientRect(&rc);
 
-	if (!m_wndSplitter.CreateStatic(this, 3, 1, WS_CHILD | WS_VISIBLE))
+	if (!m_wndSplitter.CreateStatic(this, 4, 1, WS_CHILD | WS_VISIBLE))
 		return FALSE;
 
-	if (!m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(PackListView), CSize(rc.Width(), rc.Height() / 3), pContext))
+	if (!m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(PackListView), CSize(rc.Width(), rc.Height() * 3  / 10), pContext))
 		return FALSE;
 
-	if (!m_wndSplitter.CreateView(1, 0, RUNTIME_CLASS(PackInfoView), CSize(rc.Width(), rc.Height() / 3), pContext))
+	if (!m_wndSplitter.CreateView(1, 0, RUNTIME_CLASS(PackInfoView), CSize(rc.Width(), rc.Height() * 3 / 10), pContext))
 		return FALSE;
 
-	if (!m_wndSplitter.CreateView(2, 0, RUNTIME_CLASS(PackHexView), CSize(rc.Width(), rc.Height() / 3), pContext))
+	if (!m_wndSplitter.CreateView(2, 0, RUNTIME_CLASS(PackHexView), CSize(rc.Width(), rc.Height() * 3/ 10), pContext))
+		return FALSE;
+
+	if (!m_wndSplitter.CreateView(3, 0, RUNTIME_CLASS(FlowView), CSize(rc.Width(), rc.Height() / 10), pContext))
 		return FALSE;
 
 	return TRUE;
@@ -133,7 +137,7 @@ BOOL CMainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO*
 	return CFrameWnd::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 }
 
-
+//选择网卡
 void CMainFrame::OnChoiceDev()
 {
 	// TODO: 在此添加命令处理程序代码

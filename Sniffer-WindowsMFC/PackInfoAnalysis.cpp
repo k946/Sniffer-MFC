@@ -16,6 +16,29 @@ CString global_seq;
 CString global_s_port;
 CString global_d_port;
 
+CString GetValue(const const u_char* pkt_data, CString key) {
+	std::map<CString, CString> info;		//报文头部的键值对：字段名-值
+
+	std::unique_ptr<PackInfoAnalysis> protocol; //协议分析类,使用智能指针方便回收内存
+	protocol.reset(new Ethernet(0));
+
+	//遍历协议，构造需要PackInfoView显示的信息以及协议头的偏移量protocol_offset
+	while (protocol != NULL) {
+		protocol->GetInfo(pkt_data + protocol->offset, info);		//获取当前协议头的键值对，保存在info
+		
+		//构造PackInfoView显示的信息
+		for (auto iter = info.begin(); iter != info.end(); iter++) {
+			if (key.Compare(iter->first) == 0)
+				return iter->second;
+		}
+
+		info.clear();
+		protocol.reset(protocol->NextProtocol(pkt_data + protocol->offset));
+	}
+
+	return (CString)"";
+}
+
 PackInfoAnalysis* Ethernet::NextProtocol(const const u_char* pkt_data) {
 
 	CString kind;
@@ -47,8 +70,8 @@ void Ethernet::GetInfo(const u_char* pkt_data ,std::map<CString,CString> &result
 	CString d_mac;
 	CString kind;
 
-	s_mac.Format((CString)"%02X-%02X-%02X-%02X-%02X-%02X", pkt_data[0], pkt_data[1], pkt_data[2], pkt_data[3], pkt_data[4], pkt_data[5]);
-	d_mac.Format((CString)"%02X-%02X-%02X-%02X-%02X-%02X", pkt_data[6], pkt_data[7], pkt_data[8], pkt_data[9], pkt_data[10], pkt_data[11]);
+	d_mac.Format((CString)"%02X-%02X-%02X-%02X-%02X-%02X", pkt_data[0], pkt_data[1], pkt_data[2], pkt_data[3], pkt_data[4], pkt_data[5]);
+	s_mac.Format((CString)"%02X-%02X-%02X-%02X-%02X-%02X", pkt_data[6], pkt_data[7], pkt_data[8], pkt_data[9], pkt_data[10], pkt_data[11]);
 	kind.Format((CString)"%02X%02X", pkt_data[12], pkt_data[13]);
 	
 	result[(CString)"源MAC"] = s_mac;

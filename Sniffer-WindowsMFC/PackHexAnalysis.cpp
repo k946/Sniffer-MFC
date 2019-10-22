@@ -65,6 +65,7 @@ CString PackHexAnalysis::charFormatHexASCII(const u_char * pkt_data, int size) {
 	CString hexCount;
 	CString result;
 	int i;
+
 	//获取16进制及ASCII
 	for (i = 0; i + 16 < size; i = i + 16) {
 		hexCount.Format((CString)"%04X:   ", i);

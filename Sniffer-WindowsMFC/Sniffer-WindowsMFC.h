@@ -14,7 +14,8 @@
 #include "pcap.h"
 #include <vector>
 #include "SnifferThread.h"
-
+#include "FlowView.h"
+#include "FilterDlg.h"
 
 // CSnifferWindowsMFCApp:
 // 有关此类的实现，请参阅 Sniffer-WindowsMFC.cpp
@@ -26,12 +27,13 @@ public:
 	CSnifferWindowsMFCApp() noexcept;
 
 	//自定义变量
-	HWND m_packList;					//PackListView的句柄
-	PackListView *m_packListCtrl;		//调用PackListView的成员方法	
-	PackInfoView *m_packInfoViewCtrl;	//调用PackInfoView的成员方法
-	PackHexView *m_packHexViewCtrl;		//调用PackHexView的成员方法
-	std::vector<CString>	m_filter_IPAddress = {};	//需要过滤的IP地址
-	std::vector<CString>	m_filter_Protocol = {};		//需要过滤的协议
+	CString m_mac = NULL;						//网卡的mac地址
+	HWND m_packList = NULL;					//PackListView的句柄
+	PackListView *m_packListCtrl = NULL;		//调用PackListView的成员方法	
+	PackInfoView *m_packInfoViewCtrl = NULL;	//调用PackInfoView的成员方法
+	PackHexView *m_packHexViewCtrl	= NULL;		//调用PackHexView的成员方法
+	FlowView *m_flowView = NULL;				//调用FlowView的成员方法
+	FilterDlg *m_filterDlg = NULL;				//调用FilterDlg的成员方法
 	pcap_t* m_curDev = NULL;					//已开启的网卡设备
 	bool m_isSniffer = FALSE;					//是否正在嗅探
 	BOOL m_haveFilter = FALSE;					//是否开启过滤

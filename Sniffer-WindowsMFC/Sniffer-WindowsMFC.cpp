@@ -111,6 +111,10 @@ BOOL CSnifferWindowsMFCApp::InitInstance()
 		WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, nullptr,
 		nullptr);
 
+	{
+		
+	}
+
 	// 唯一的一个窗口已初始化，因此显示它并对其进行更新
 	pFrame->ShowWindow(SW_SHOW);
 	pFrame->UpdateWindow();

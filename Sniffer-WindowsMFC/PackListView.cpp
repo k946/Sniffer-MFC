@@ -124,15 +124,8 @@ void PackListView::OnClickList(NMHDR * pNMHDR, LRESULT * pResult) {
 		std::unique_ptr<PackInfoAnalysis> protocol; //协议分析类,使用智能指针方便回收内存
 		int start;								//协议开始的字节
 		int end;								//协议结束的字节
-
-		//判断协议类型
-		kind.Format((CString)"%02X%02X", pkt_data[12], pkt_data[13]);
-		if (kind.Compare(kind_ip) == 0 || kind.Compare(kind_arp) == 0 || kind.Compare(kind_rarp) == 0 || kind.Compare(kind_ipv6) == 0) {
-			protocol.reset(new Ethernet(0));
-		}
-		else {
-			protocol.reset(new IEEE802_3(0));
-		}
+	
+		protocol.reset(new Ethernet(0));
 
 		//遍历协议，构造需要PackInfoView显示的信息以及协议头的偏移量protocol_offset
 		while (protocol != NULL) {

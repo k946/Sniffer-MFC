@@ -186,6 +186,8 @@
     <ClInclude Include="ChildView.h" />
     <ClInclude Include="ChoiceDevs.h" />
     <ClInclude Include="FilterDlg.h" />
+    <ClInclude Include="FlowTraffic.h" />
+    <ClInclude Include="FlowView.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="PackHexAnalysis.h" />
     <ClInclude Include="PackHexView.h" />
@@ -196,6 +198,7 @@
     <ClInclude Include="SendPacket.h" />
     <ClInclude Include="Sniffer-WindowsMFC.h" />
     <ClInclude Include="SnifferThread.h" />
+    <ClInclude Include="Staticstics.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -203,6 +206,7 @@
     <ClCompile Include="ChildView.cpp" />
     <ClCompile Include="ChoiceDevs.cpp" />
     <ClCompile Include="FilterDlg.cpp" />
+    <ClCompile Include="FlowView.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="PackHexAnalysis.cpp" />
     <ClCompile Include="PackHexView.cpp" />
